@@ -1,0 +1,9 @@
+Edit ,|sort|uniq
+chmod +x aws-cli-upgrade
+host aws --version
+host orch aws-cli --version
+host orch aws-cli help
+host orch aws-cli-upgrade
+host orch which aws-cli-install
+host which aws
+web 'https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html'

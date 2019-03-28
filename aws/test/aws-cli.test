@@ -1,0 +1,41 @@
+host orch pastout aws-cli
+tail -f log/aws-cli.test.out
+
+	> set -efux
+	> set -o pipefail
+
+	> aws-cli --version
+
+	> aws-cli fnord || true
+
+Is there another way to get rid of the control characters in help output?
+
+	> aws-cli help
+	> aws-cli help | col -b
+
+Authenticate as user "tester".
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+Extract each field from complete text output.
+
+	> aws-cli sts get-caller-identity
+	> UserId=$(aws-cli sts get-caller-identity | cut -d'	' -f3)
+	> Account=$(aws-cli sts get-caller-identity | cut -d'	' -f1)
+	> Arn=$(aws-cli sts get-caller-identity | cut -d'	' -f2)
+
+Extract each field from text output with query
+
+	> UserId=$(aws-cli sts get-caller-identity --query 'UserId')
+	> Account=$(aws-cli sts get-caller-identity --query 'Account')
+	> Arn=$(aws-cli sts get-caller-identity --query 'Arn')
+
+Extract each field from complete JSON output.
+
+	> aws-cli output=json sts get-caller-identity
+	> UserId=$(aws-cli output=json sts get-caller-identity | jq .UserId | sed 's ^"  ;s "$  ')
+	> Account=$(aws-cli output=json sts get-caller-identity | jq .Account | sed 's ^"  ;s "$  ')
+	> Arn=$(aws-cli output=json sts get-caller-identity | jq .Arn | sed 's ^"  ;s "$  ')
+
+	> echo done

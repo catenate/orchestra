@@ -1,0 +1,17 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+echo=${echo-}
+install=${install:-false}
+upgrade=${upgrade:-true}
+
+if $install; then
+	$echo sudo apt install python3-pip
+	$echo sudo apt-get install jq
+fi
+
+if $install || $upgrade; then
+	$echo pip3 install awscli --upgrade --user
+fi

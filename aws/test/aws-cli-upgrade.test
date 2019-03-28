@@ -1,0 +1,11 @@
+host orch pastout aws-cli-upgrade
+tail -f log/aws-cli-upgrade.test.out
+
+	> set -efux
+	> set -o pipefail
+
+	> test "$(aws-cli-upgrade echo=echo)" = "$(aws-cli-upgrade echo=echo upgrade=true)"
+
+	> test "$(aws-cli-upgrade echo=echo install=true)" = "$(aws-cli-upgrade echo=echo install=true upgrade=true)"
+
+	> echo done

@@ -1,0 +1,19 @@
+Edit ,|sort|uniq
+chmod +x pfsh
+cp -x /github/pfsh/bash-script/pfsh-version orch-version
+cp -x /n/local/home/jdc/bin/pfsh orch
+cp -x orch /n/local/home/jdc/bin 
+git
+git add --all .
+git commit -a -m 'orchestra 0.1.0: Install and upgrade AWS CLI, run it in test to get its version, and run it in test with authentication to get identity of caller.'
+host ./orch which argenv
+host ./orch which aws-cli-install
+host ./orch which pfsh
+host ./path aws-cli-install
+host ./path env | grep PATH
+host orch env | grep PATH | host tr : '\n'
+host orch which argenv
+host orch which log
+host which orch
+host which pfsh
+ls -l

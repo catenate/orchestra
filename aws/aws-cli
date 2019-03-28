@@ -1,0 +1,10 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+PATH=~/.local/bin:$PATH
+color=${color:-off}
+output=${output:-text}
+
+aws --color color --output $output "$@"
