@@ -6,5 +6,6 @@ set -o pipefail
 PATH=~/.local/bin:$PATH
 color=${color:-off}
 output=${output:-text}
+region=${region:-us-east-1}
 
-aws --color color --output $output "$@"
+aws --color $color --output $output --region $region "$@"

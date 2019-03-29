@@ -1,0 +1,10 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+echo=${echo-}
+
+$echo zip function-only.zip function.sh
+
+$echo aws-cli lambda update-function-code --function-name bash-runtime --zip-file fileb://function-only.zip

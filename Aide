@@ -1,11 +1,14 @@
+/github/orchestra/orch-version
 Edit ,|sort|uniq
+Edit X/orchestra/D
 chmod +x pfsh
 cp -x /github/pfsh/bash-script/pfsh-version orch-version
 cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
 git
 git add --all .
-git commit -a -m 'orchestra 0.1.0: Install and upgrade AWS CLI, run it in test to get its version, and run it in test with authentication to get identity of caller.'
+git commit -a -m 'orchestra 0.2.0: Work through the lambda tutorial.'
+git push origin master
 host ./orch which argenv
 host ./orch which aws-cli-install
 host ./orch which pfsh

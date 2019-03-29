@@ -1,0 +1,5 @@
+export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+PATH=~/.local/bin:$PATH
+aws --region us-east-1 lambda publish-layer-version --layer-name bash-runtime --zip-file fileb://runtime.zip

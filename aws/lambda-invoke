@@ -1,0 +1,14 @@
+set -eu
+set -o pipefail
+
+self=$(basename $0)
+tmp=/tmp/$self.$$
+trap 'rm -rf ${tmp}*' EXIT HUP INT QUIT TERM
+
+. argenv
+
+echo=${echo-}
+function=${function:-bash-runtime}
+command=${command:-hostname}
+
+$echo aws-cli lambda invoke --function-name $function --payload "{\"command\":\"${command}\"}" $tmp

@@ -1,0 +1,18 @@
+Edit ,|sort|uniq
+Edit X/runtime-tutorial/D
+cp echo.sh function.sh
+cp echo.sh function.sh; host orch ./update-code; host orch ./invoke
+cp eval.sh function.sh
+host orch ./create
+host orch ./invoke
+host orch ./layer
+host orch ./relayer
+host orch ./update-code
+host orch ./update-config
+host orch lambda-new
+host zip function-only.zip function.sh
+host zip function.zip function.sh bootstrap
+host zip runtime.zip bootstrap
+ls -l
+md5sum *.sh
+pnx create

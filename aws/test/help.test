@@ -1,0 +1,18 @@
+host orch pastout help
+tail -f log/help.test.out
+
+	> set -efux
+	> set -o pipefail
+
+	> aws-cli --version
+
+	> aws-cli fnord || true
+
+Is there another way to get rid of the control characters in help output?
+
+	> aws-cli help
+	> aws-cli help | col -b
+
+	> aws-cli lambda invoke help | col -b
+
+	> echo done

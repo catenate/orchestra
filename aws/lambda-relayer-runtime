@@ -1,0 +1,12 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+echo=${echo-}
+
+$echo zip runtime.zip bootstrap
+
+$echo aws-cli lambda publish-layer-version --layer-name bash-runtime --zip-file fileb://runtime.zip
+
+$echo aws-cli lambda update-function-configuration --function-name bash-runtime --layers arn:aws:lambda:${region}:${accountid}:layer:bash-runtime:${count}
