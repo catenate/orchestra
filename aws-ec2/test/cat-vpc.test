@@ -1,0 +1,19 @@
+host orch pastout cat-vpc
+tail -f log/cat-vpc.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+	> export vpc=$(aws-vpc-tester)
+
+	> ec2-cat-vpc output=json
+	> cidr_block=$(ec2-cat-vpc query='Vpcs[*].CidrBlock')
+	> count_subnet=5
+	> routing_prefix_subnet=24
+	> echo $cidr_block | sed "s ^\([^.]\+\)\.\([^.]\+\)\.\([^.]\+\)\.\([^.]\+\)/\([^.]\+\) \1.\2.${count_subnet}.\4/${routing_prefix_subnet} "
+
+	> echo done

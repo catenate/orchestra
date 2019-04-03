@@ -1,17 +1,12 @@
 host orch pastout aws-cli
 tail -f log/aws-cli.test.out
 
+regress skip
+
 	> set -efux
 	> set -o pipefail
 
 	> aws-cli --version
-
-	> aws-cli fnord || true
-
-Is there another way to get rid of the control characters in help output?
-
-	> aws-cli help
-	> aws-cli help | col -b
 
 Authenticate as user "tester".
 

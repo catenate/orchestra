@@ -1,6 +1,8 @@
 host orch pastout help
 tail -f log/help.test.out
 
+regress skip
+
 	> set -efux
 	> set -o pipefail
 

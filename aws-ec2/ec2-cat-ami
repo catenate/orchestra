@@ -1,0 +1,8 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html'
+
+aws-cli ec2 describe-images

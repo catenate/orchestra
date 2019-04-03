@@ -1,0 +1,6 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+aws-cli emr list-clusters

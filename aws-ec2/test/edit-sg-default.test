@@ -1,0 +1,27 @@
+host orch pastout edit-sg-default
+tail -f log/edit-sg-default.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+	> vpc=$(aws-vpc-tester)
+
+	> ip_self=$(aws-checkip)
+	> export output=json
+	> export sg=default
+
+	> ec2-cat-sg
+
+	> exit 0
+
+web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html'
+
+	> ec2-open-port cidr=${ip_self}/32
+
+	> ec2-cat-sg
+
+	> echo done

@@ -1,0 +1,18 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html'
+
+query=${query-}
+query_opt=${query_opt-}
+
+if test -n "$query"; then
+	export output=text
+	query_opt="--query $query"
+	aws-cli ec2 describe-subnets $query_opt
+else
+	export output=json
+	aws-cli ec2 describe-subnets --filters "Name=vpc-id,Values=$vpc"
+fi

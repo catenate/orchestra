@@ -1,0 +1,18 @@
+host orch pastout cat-key
+tail -f log/cat-key.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+	> export key=tester-test
+
+	> ec2-cat-key
+
+	> openssl pkcs8 -in $(ec2-key-path) -inform PEM -outform DER -topk8 -nocrypt | openssl sha1 -c
+
+	> echo done

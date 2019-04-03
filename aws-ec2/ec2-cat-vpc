@@ -1,0 +1,16 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+query=${query-}
+query_opt=${query_opt-}
+if test -n "$query"; then
+	query_opt="--query $query"
+fi
+
+export output
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html'
+
+aws-cli ec2 describe-vpcs --vpc-ids $vpc $query_opt

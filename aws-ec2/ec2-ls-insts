@@ -1,0 +1,6 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+aws-cli ec2 list-instances --cluster-id $cluster

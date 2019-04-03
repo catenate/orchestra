@@ -1,0 +1,14 @@
+host orch pastout cat-ami
+tail -f log/cat-ami.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+	> ec2-cat-ami
+
+	> echo done

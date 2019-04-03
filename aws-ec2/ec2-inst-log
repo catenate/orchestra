@@ -1,0 +1,19 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+i=${i-}
+
+if test -z "$i"; then
+	i_name=${i_name-}
+	if test -n "$i_name"; then
+		i=$(ec2-i-${i_name})
+	fi
+fi
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/get-console-output.html'
+
+if test -n "$i"; then
+	aws-cli ec2 get-console-output --instance-id $i >${i}.log
+fi

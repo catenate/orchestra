@@ -1,0 +1,6 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+aws-cli ec2 describe-key-pairs --key-name $key

@@ -1,6 +1,8 @@
 host orch pastout aws-cli-upgrade
 tail -f log/aws-cli-upgrade.test.out
 
+regress skip
+
 	> set -efux
 	> set -o pipefail
 

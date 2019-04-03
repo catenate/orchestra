@@ -1,0 +1,51 @@
+host orch pastout new-ssh-sg
+tail -f log/new-ssh-sg.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+	> vpc=$(aws-vpc-tester)
+
+	> export sg=ssh-sg
+
+web 'https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-sg.html'
+
+	sgid=$(ec2-new-sg vpc=$vpc desc='SSH')
+
++ set -o pipefail
+++ aws-access-key-id-tester
++ export AWS_ACCESS_KEY_ID=AKIA4ARKAG2C34R3VY5E
++ AWS_ACCESS_KEY_ID=AKIA4ARKAG2C34R3VY5E
+++ aws-secret-access-key-tester
++ export AWS_SECRET_ACCESS_KEY=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
++ AWS_SECRET_ACCESS_KEY=dhG01MU8RI43l3xRSohmUy+YZ33bedYTL1R0BLPs
+++ aws-vpc-tester
++ vpc=vpc-2346c859
+++ ec2-new-sg vpc=vpc-2346c859 sg=ssh-sg desc=SSH
++ sgid=sg-0068c9b6c615bd83b
++ echo done
+done
+
+	exit 0
+
+An error occurred (InvalidGroup.NotFound) when calling the DescribeSecurityGroups operation: The security group 'sg-0068c9b6c615bd83b' does not exist in default VPC 'vpc-2346c859'
+
+	> ip_self=$(aws-checkip)
+
+	> export output=json
+
+	> ec2-cat-sg
+
+	> exit 0
+
+web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html'
+
+	> ec2-open-port cidr=${ip_self}/32
+
+	> ec2-cat-sg
+
+	> echo done

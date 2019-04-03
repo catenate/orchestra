@@ -1,0 +1,54 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+extra=${extra-}
+
+case $os$extra-$arch in
+	amazon-x86)
+		echo 'ami-0080e4c5bc078760e'
+		;;
+	amazon2-arm)
+		echo 'ami-06b382aba6c5a4f2c'
+		;;
+	amazon2-x86)
+		echo 'ami-0de53d8956e8dcf80'
+		;;
+	amazon2.net-x86)
+		echo 'ami-0e24aee0334f94155'
+		;;
+	redhat-arm)
+		echo 'ami-0e3688b4a755ad736'
+		;;
+	redhat-x86)
+		echo 'ami-011b3ccf1bd6db744'
+		;;
+	suse12-x86)
+		echo 'ami-0c55353c85ac52c96'
+		;;
+	suse15-arm)
+		echo 'ami-0d7279e0c13593cb7'
+		;;
+	suse15-x86)
+		echo 'ami-06ea7729e394412c8'
+		;;
+	ubuntu14-x86)
+		echo 'ami-05a36d3b9aa4a17ac'
+		;;
+	ubuntu16-arm)
+		echo 'ami-036ede09922dadc9b'
+		;;
+	ubuntu16-x86)
+		echo 'ami-0565af6e282977273'
+		;;
+	ubuntu18-arm)
+		echo 'ami-01ac7d9c1179d7b74'
+		;;
+	ubuntu18-x86)
+		echo 'ami-0a313d6098716f372'
+		;;
+	ubuntu18.net-x86)
+		echo 'ami-e24b7d9d'
+		;;
+esac

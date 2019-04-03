@@ -1,0 +1,16 @@
+host orch pastout ls-insts
+tail -f log/ls-insts.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+	> ec2-ls-clusters
+
+	> ec2-ls-insts
+
+	> echo done

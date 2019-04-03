@@ -1,3 +1,4 @@
+*.pem
 *.test.out
 *.test.past
 *.test.sh

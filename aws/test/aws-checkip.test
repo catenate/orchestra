@@ -1,0 +1,11 @@
+host orch pastout aws-checkip
+tail -f log/aws-checkip.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> aws-checkip
+
+	> echo done

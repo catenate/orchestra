@@ -1,0 +1,22 @@
+host orch pastout new-key
+tail -f log/new-key.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html'
+web 'https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html'
+
+web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/create-key-pair.html'
+web 'https://stackoverflow.com/questions/41826452/error-creating-key-pair-you-are-not-authorized-to-perform-this-operation'
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html'
+
+	> ec2-new-key test=true key=tester-test
+	ec2-new-key key=tester-test
+
+	> echo done

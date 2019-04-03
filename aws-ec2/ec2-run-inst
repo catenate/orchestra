@@ -1,0 +1,49 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+amazon2_x86=$(ec2-ami-id os=amazon2 arch=x86)
+
+ami=${ami:-$amazon2_x86}
+key=${key:-tester-test}
+sg=${sg:-ssh-sg}
+subnet=${subnet:-$(ec2-subnet-tester-1c)}
+
+sgid=$(ec2-cat-sg sg=$sg query='SecurityGroups[*].GroupId')
+
+echo=${echo-}
+test=${test:-false}
+test_opt=${test_opt-}
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html'
+
+run_instances="aws-cli ec2 run-instances --image-id $ami --count 1 --instance-type t2.micro --key-name $key --security-group-ids $sgid --subnet-id $subnet"
+
+if $test; then
+	export output=json
+	test_opt="$test_opt --dry-run"
+
+	$echo $run_instances $test_opt
+else
+	export output=text
+
+	if test "$echo" = "echo"; then
+		i_id=i-1a2b3c4d5e6f
+	else
+		i_id=$($run_instances --query 'Instances[*].InstanceId')
+	fi
+
+	selfdir=$(dirname $0)
+
+	name=${name-}
+	if test -n "$name"; then
+		i_name=i-${name}
+	else
+		i_name=$i_id
+	fi
+
+	echo "echo '$i_id'" >${selfdir}/ec2-${i_name}
+	chmod +x ${selfdir}/ec2-${i_name}
+	ec2-${i_name}
+fi

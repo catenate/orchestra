@@ -1,0 +1,10 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+port=${port:-22}
+
+# TODO handle ipv4 and ipv6 depending on what parameter is passed in: cidr_ipv4 cidr_ipv6
+
+aws-cli ec2 authorize-security-group-ingress --group-name $sg --protocol tcp --port $port --cidr ${cidr}

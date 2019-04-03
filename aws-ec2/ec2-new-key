@@ -1,0 +1,13 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+test=${test:-false}
+
+if $test; then
+	aws-cli ec2 create-key-pair --key-name $key --query 'KeyMaterial' --output text --dry-run
+else
+	aws-cli ec2 create-key-pair --key-name $key --query 'KeyMaterial' --output text >${key}.pem
+	chmod 400 ${key}.pem
+fi

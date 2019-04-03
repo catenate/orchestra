@@ -1,0 +1,10 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+export output=text
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html'
+
+aws-cli ec2 describe-instances --instance-ids $i --query 'Reservations[*].Instances[*].PublicDnsName'

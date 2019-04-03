@@ -1,0 +1,18 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html'
+
+query=${query-}
+query_opt=${query_opt-}
+
+if test -n "$query"; then
+	export output=text
+	query_opt="--query $query"
+else
+	export output=json
+fi
+
+aws-cli ec2 describe-security-groups --group-names $sg $query_opt

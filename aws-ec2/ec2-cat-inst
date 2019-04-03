@@ -1,0 +1,18 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+query=${query-}
+query_opt=${query_opt-}
+
+if test -n "$query"; then
+	export output=text
+	query_opt="--query $query"
+else
+	export output=json
+fi
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html'
+
+aws-cli ec2 describe-instances $query_opt

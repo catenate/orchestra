@@ -1,0 +1,44 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+export vpc
+cidr_block_vpc=$(ec2-cat-vpc query='Vpcs[*].CidrBlock')
+
+octet_c=${octet_c:-0}
+routing_prefix_length=${routing_prefix_length:-24}
+cidr_block_subnet=$(echo $cidr_block_vpc | sed "s ^\([^.]\+\)\.\([^.]\+\)\.\([^.]\+\)\.\([^.]\+\)/\([^.]\+\) \1.\2.${octet_c}.\4/${routing_prefix_length} ")
+
+echo=${echo-}
+test=${test:-false}
+
+# web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html'
+
+create_subnet="aws-cli ec2 create-subnet --cidr-block $cidr_block_subnet --vpc-id $vpc"
+
+if $test; then
+	export output=json
+
+	test_opt=${test_opt-}
+	test_opt="$test_opt --dry-run"
+
+	$echo $create_subnet $test_opt
+else
+	export output=text
+
+	subnet_id=$($create_subnet --query 'Subnet.SubnetId')
+
+	selfdir=$(dirname $0)
+
+	name=${name-}
+	if test -n "$name"; then
+		subnet_name=subnet-${name}
+	else
+		subnet_name=$subnet_id
+	fi
+
+	echo "echo '$subnet_id'" >${selfdir}/ec2-${subnet_name}
+	chmod +x ${selfdir}/ec2-${subnet_name}
+	ec2-${subnet_name}
+fi

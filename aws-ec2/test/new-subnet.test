@@ -1,0 +1,21 @@
+host orch pastout new-subnet
+tail -f log/new-subnet.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+	> export vpc=$(aws-vpc-tester)
+
+	> test "$(ec2-new-subnet set=-x echo=echo test=true)" = "$(ec2-new-subnet set=-x echo=echo test=true octet_c=0 routing_prefix_length=24)"
+
+	> test "$(ec2-new-subnet test=true 2>&1)" = "$(ec2-new-subnet test=true octet_c=0 routing_prefix_length=24 2>&1)"
+
+	> ec2-new-subnet octet_c=1 name=tester-1
+
+	> ec2-subnet-tester-1
+
+	> echo done

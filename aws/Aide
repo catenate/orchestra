@@ -4,12 +4,14 @@ TODO: Follow the lambda bash runtime tutorial, to run arbitrary (systems of) scr
 TODO: lambda function to clone given repos and execute a given script within them with a given set of parameters
 TODO: lambda function to execute a small inline bit of code
 chmod +x aws-cli-upgrade
+chmod 500 aws-access-key-id-tester aws-secret-access-key-tester
 host aws --version
 host orch aws-cli --version
 host orch aws-cli help
 host orch aws-cli-upgrade
 host orch which aws-cli-install
 host which aws
+ls -l
 web 'https://825795556997.signin.aws.amazon.com/console'
 web 'https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html'
 web 'https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html'

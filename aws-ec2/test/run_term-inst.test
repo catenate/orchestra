@@ -1,0 +1,67 @@
+host orch pastout run_term-inst
+tail -f log/run_term-inst.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+	> export key=tester-test
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html'
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics.html'
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html'
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ComponentsAMIs.html#storage-for-the-root-device'
+web 'https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LaunchInstanceWizard:'
+
+web 'https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html'
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics.html'
+
+	> ec2-cat-inst
+
+	> ec2-run-inst set=-x echo=echo test=true
+
+	ec2-run-inst test=true
+
+	> ec2-run-inst echo=echo
+
+	> ec2-run-inst echo=echo name=tester-1
+
+	export i=i-1a2b3c4d5e6f
+	> export i=$(ec2-run-inst sg=default name=tester-1)
+
+	> ec2-cat-inst
+
+	retry-aloha limit=3 ec2-inst-state set=-x state=running
+	> retry-aloha limit=180 ec2-inst-state state=running
+
+	> fqdn=$(ec2-inst-fqdn)
+
+	> ec2-ssh-inst debug=true $fqdn hostname || true
+
+	ec2-ssh-inst $fqdn cat /etc/image-id
+	ec2-ssh-inst $fqdn cat /etc/system-release
+	ec2-ssh-inst $fqdn cat /etc/os-release
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html'
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html'
+web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/stop-instances.html'
+
+web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html'
+
+	> ec2-inst-log
+
+	> ec2-term-inst
+
+	> ec2-cat-inst
+
+	retry-aloha limit=3 ec2-inst-state set=-x state=terminated
+	> retry-aloha limit=0 ec2-inst-state state=terminated
+
+	> echo done
