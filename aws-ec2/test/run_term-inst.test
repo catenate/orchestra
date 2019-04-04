@@ -42,7 +42,7 @@ web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics
 
 	> fqdn=$(ec2-inst-fqdn)
 
-	> ec2-ssh-inst debug=true $fqdn hostname || true
+	> ec2-ssh-inst $fqdn hostname || true
 
 	ec2-ssh-inst $fqdn cat /etc/image-id
 	ec2-ssh-inst $fqdn cat /etc/system-release

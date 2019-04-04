@@ -10,7 +10,9 @@ regress skip
 	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
 	> vpc=$(aws-vpc-tester)
 
-	> ip_self=$(aws-checkip)
+	ipv4_self=$(aws-checkip)
+	> ipv6_self=2600:1700:1b00:46f0:19c6:2ad3:2440:73d4
+
 	> export output=json
 	> export sg=default
 
@@ -20,7 +22,8 @@ regress skip
 
 web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html'
 
-	> ec2-open-port cidr=${ip_self}/32
+	ec2-open-port cidr_ipv4=${ipv4_self}/32
+	> ec2-open-port cidr_ipv6=${ipv6_self}/128
 
 	> ec2-cat-sg
 

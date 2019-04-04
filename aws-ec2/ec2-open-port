@@ -3,8 +3,15 @@ set -o pipefail
 
 . argenv
 
+cidr_ipv4=${cidr_ipv4-}
+cidr_ipv6=${cidr_ipv6-}
 port=${port:-22}
 
-# TODO handle ipv4 and ipv6 depending on what parameter is passed in: cidr_ipv4 cidr_ipv6
+if test -n "$cidr_ipv4"; then
+	aws-cli ec2 authorize-security-group-ingress --group-name $sg --protocol tcp --port $port --cidr ${cidr_ipv4}
+fi
 
-aws-cli ec2 authorize-security-group-ingress --group-name $sg --protocol tcp --port $port --cidr ${cidr}
+if test -n "$cidr_ipv6"; then
+	aws-cli ec2 authorize-security-group-ingress --group-name $sg --ip-permissions IpProtocol=tcp,FromPort=22,ToPort=22,Ipv6Ranges="[{CidrIpv6=${cidr_ipv6}}]"
+fi
+
