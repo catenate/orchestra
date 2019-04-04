@@ -40,13 +40,19 @@ web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics
 	retry-aloha limit=3 ec2-inst-state set=-x state=running
 	> retry-aloha limit=180 ec2-inst-state state=running
 
+If this script errors out for any reason, still terminate the instance.
+
+	> trap 'ec2-term-inst' EXIT HUP INT QUIT TERM
+
 	> fqdn=$(ec2-inst-fqdn)
 
-	> ec2-ssh-inst $fqdn hostname || true
+	> cwd=$(ec2-ssh $fqdn pwd)
 
-	ec2-ssh-inst $fqdn cat /etc/image-id
-	ec2-ssh-inst $fqdn cat /etc/system-release
-	ec2-ssh-inst $fqdn cat /etc/os-release
+	> ec2-scp-ssh from=$(which agent-setup) host=$fqdn to=${cwd}/agent-setup
+
+	ec2-ssh $fqdn cat /etc/image-id
+	ec2-ssh $fqdn cat /etc/system-release
+	ec2-ssh $fqdn cat /etc/os-release
 
 web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html'
 

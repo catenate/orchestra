@@ -1,0 +1,23 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+export debug=${debug:-false}
+export debug_opt=${debug_opt-}
+if $debug; then
+	export debug_opt="$debug_opt -vvv"
+fi
+
+export key=${key:-tester-test}
+keypath=$(ec2-key-path key=$key)
+
+export user=${user:-ec2-user}
+
+scp -o 'StrictHostKeyChecking no' -i $keypath $from ${user}@${host}:${to}
+
+cmd=${cmd-}
+
+ec2-ssh $host chmod +x $to
+ec2-ssh $host $cmd $to "$@"
+ec2-ssh $host rm -f $to

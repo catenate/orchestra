@@ -1,0 +1,5 @@
+set -efux
+set -o pipefail
+
+sudo yum install -y git
+which git
