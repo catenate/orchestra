@@ -1,13 +1,13 @@
 set -efu
 set -o pipefail
 
-self=$(dirname $0)
+selfdir=$(dirname $0)
 
 . argenv
 
-pempath=${self}/${key}.pem
-if test -r $pempath; then
-	echo $pempath
+pem_path=${selfdir}/${key}.pem
+if test -r $pem_path; then
+	echo $pem_path
 	exit 0
 fi
 

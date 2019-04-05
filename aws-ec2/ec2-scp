@@ -3,16 +3,16 @@ set -o pipefail
 
 . argenv
 
-export debug=${debug:-false}
-export debug_opt=${debug_opt-}
+debug=${debug:-false}
+debug_opt=${debug_opt-}
 if $debug; then
-	export debug_opt="$debug_opt -vvv"
+	debug_opt="$debug_opt -vvv"
 fi
 
-export key=${key:-tester-test}
+key=${key:-tester-test}
 keypath=$(ec2-key-path key=$key)
 
-export user=${user:-ec2-user}
+user=${user:-ec2-user}
 
 ec2-ssh $host mkdir -p $(dirname $to) || true
 
@@ -22,9 +22,3 @@ perm=${perm-}
 if test -n "$perm"; then
 	ec2-ssh $host chmod $perm $to
 fi
-
-cmd=${cmd-}
-
-ec2-ssh $host chmod +x $to
-ec2-ssh $host $cmd $to "$@"
-ec2-ssh $host rm -f $to

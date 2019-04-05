@@ -46,13 +46,11 @@ If this script errors out for any reason, still terminate the instance.
 
 	> fqdn=$(ec2-inst-fqdn)
 
-	> cwd=$(ec2-ssh $fqdn pwd)
+Wait for sshd.
 
-	> ec2-scp-ssh from=$(which agent-setup) host=$fqdn to=${cwd}/agent-setup
+	> ec2-inst-service service=sshd
 
-	ec2-ssh $fqdn cat /etc/image-id
-	ec2-ssh $fqdn cat /etc/system-release
-	ec2-ssh $fqdn cat /etc/os-release
+	> ec2-ssh $fqdn pwd
 
 web 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html'
 

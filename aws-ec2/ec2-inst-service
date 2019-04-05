@@ -1,0 +1,14 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+fqdn=$(ec2-inst-fqdn i=$i)
+export limit=${limit:-180}
+service=${service-}
+
+case $service in
+	sshd)
+		retry-aloha nc -z $fqdn 22
+		;;
+esac

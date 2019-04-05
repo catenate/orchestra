@@ -4,12 +4,12 @@ set -o pipefail
 . argenv
 
 export output=text
-state=${state-}
 
 # web 'https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html'
 
 state_actual=$(aws-cli ec2 describe-instances --instance-ids $i --query 'Reservations[*].Instances[*].State.Name')
 
+state=${state-}
 if test -n "$state"; then
 	test "$state_actual" = "$state"
 else

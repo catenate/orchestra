@@ -1,0 +1,14 @@
+set -efu
+set -o pipefail
+
+selfdir=$(dirname $0)
+
+. argenv
+
+sshkey_path=${selfdir}/sshkey-agent
+if test -r $sshkey_path; then
+	echo $sshkey_path
+	exit 0
+fi
+
+exit 1

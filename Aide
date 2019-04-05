@@ -7,7 +7,7 @@ cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
 git
 git add --all .
-git commit -a -m 'orchestra 0.4.0: Set up instance to be an agent: clone repos and run a command.'
+git commit -a -m 'orchestra 0.4.1: Wait for sshd service when launching instance.  Copy over ssh key and configure git.  Clone icat, pfsh, and orchestra repos and create top-level run scripts.'
 git push origin master
 host ./orch which argenv
 host ./orch which aws-cli-install

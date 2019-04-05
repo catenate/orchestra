@@ -2,4 +2,25 @@ set -efux
 set -o pipefail
 
 sudo yum install -y git
-which git
+
+git config --global user.name "Jason Catena"
+git config --global user.email "jcatenate@gmail.com"
+
+ssh-keyscan github.com >> .ssh/known_hosts
+
+#GIT_TRACE=1 
+git clone git@github.com:catenate/inferno-cat.git inferno-cat
+git clone git@github.com:catenate/pfsh.git pfsh
+git clone git@github.com:catenate/orchestra.git orchestra
+
+cwd=$(pwd)
+
+mkdir bin
+echo "${cwd}/inferno-cat/bash/path \"\$@\"" >bin/icat
+echo "${cwd}/pfsh/bash-script/path \"\$@\"" >bin/pfsh
+echo "${cwd}/orchestra/path icat pfsh \"\$@\"" >bin/orch
+chmod +x bin/icat bin/pfsh bin/orch
+
+PATH=${cwd}/bin:$PATH
+
+orch orch-version

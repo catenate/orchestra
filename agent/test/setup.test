@@ -1,0 +1,38 @@
+host orch pastout setup
+tail -f log/setup.test.out
+
+regress skip
+
+	> set -efux
+	> set -o pipefail
+
+	> export AWS_ACCESS_KEY_ID=$(aws-access-key-id-tester)
+	> export AWS_SECRET_ACCESS_KEY=$(aws-secret-access-key-tester)
+
+	> export key=tester-test
+
+	> export i=$(ec2-run-inst sg=default name=tester-1)
+
+	> retry-aloha limit=180 ec2-inst-state state=running
+
+If this script errors out for any reason, still terminate the instance.
+
+	> trap 'ec2-term-inst' EXIT HUP INT QUIT TERM
+
+	> fqdn=$(ec2-inst-fqdn)
+
+	> ec2-inst-service service=sshd
+
+	> cwd=$(ec2-ssh $fqdn pwd)
+
+	> ec2-scp from=$(agent-sshkey-path) host=$fqdn to=${cwd}/.ssh/id_rsa perm=400
+
+	> ec2-scp-ssh from=$(which agent-setup) host=$fqdn to=${cwd}/agent-setup
+
+	> ec2-inst-log
+
+	> ec2-term-inst
+
+	> retry-aloha limit=0 ec2-inst-state state=terminated
+
+	> echo done
