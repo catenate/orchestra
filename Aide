@@ -1,13 +1,14 @@
 /github/orchestra/orch-version
 Edit ,|sort|uniq
 Edit X/orchestra/D
+Edit X/aws-ec2/D
 chmod +x pfsh
 cp -x /github/pfsh/bash-script/pfsh-version orch-version
 cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
 git
 git add --all .
-git commit -a -m 'orchestra 0.4.1: Wait for sshd service when launching instance.  Copy over ssh key and configure git.  Clone icat, pfsh, and orchestra repos and create top-level run scripts.'
+git commit -a -m 'orchestra 0.4.2: Group aws scripts by functional areas.'
 git push origin master
 host ./orch which argenv
 host ./orch which aws-cli-install

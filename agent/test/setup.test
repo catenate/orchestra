@@ -29,6 +29,10 @@ If this script errors out for any reason, still terminate the instance.
 
 	> ec2-scp-ssh from=$(which agent-setup) host=$fqdn to=${cwd}/agent-setup
 
+run an orch command
+
+pull everything in a given directory back to this host
+
 	> ec2-inst-log
 
 	> ec2-term-inst
