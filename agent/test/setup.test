@@ -19,6 +19,8 @@ regress skip
 
 	> agent-run sh=date
 
+	> agent-run sh=find
+
 	> agent-get
 
 	> cat out/date

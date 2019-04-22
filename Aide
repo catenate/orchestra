@@ -1,20 +1,22 @@
 /github/orchestra/orch-version
 Edit ,|sort|uniq
-Edit X/orchestra/D
 Edit X/aws-ec2/D
+Edit X/orchestra/D
 chmod +x pfsh
 cp -x /github/pfsh/bash-script/pfsh-version orch-version
 cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
 git
 git add --all .
-git commit -a -m 'update Aide and test new key for push'
+git commit -a -m 'orchestra 0.5.1: Also dump a list of files in the agent workspace.'
+git grep ec2-scp
 git push origin master
 host ./orch which argenv
 host ./orch which aws-cli-install
 host ./orch which pfsh
 host ./path aws-cli-install
 host ./path env | grep PATH
+host orch agent-sshkey-path
 host orch env | grep PATH | host tr : '\n'
 host orch which argenv
 host orch which log
@@ -23,4 +25,3 @@ host which pfsh
 ls -l
 nsh git diff
 nsh git diff --staged
-git grep ec2-scp

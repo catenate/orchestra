@@ -1,4 +1,4 @@
 set -efux
 set -o pipefail
 
-date > out/date
+find .
