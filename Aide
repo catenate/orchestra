@@ -8,7 +8,7 @@ cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
 git
 git add --all .
-git commit -a -m 'orchestra 0.4.2: Group aws scripts by functional areas.'
+git commit -a -m 'update Aide and test new key for push'
 git push origin master
 host ./orch which argenv
 host ./orch which aws-cli-install
