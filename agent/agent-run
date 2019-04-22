@@ -1,0 +1,12 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+fqdn=$(ec2-inst-fqdn)
+
+cwd=$(ec2-ssh $fqdn pwd)
+
+ec2-scp-put from=$(agent-sshkey-path) host=$fqdn to=${cwd}/.ssh/id_rsa perm=600
+
+ec2-scp-ssh from=$(which ${sh}.ssh) host=$fqdn to=${cwd}/${sh}.ssh

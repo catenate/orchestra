@@ -1,0 +1,15 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+fqdn=$(ec2-inst-fqdn)
+tgz=agent-out.tgz
+
+ec2-ssh $fqdn tar czf $tgz out
+
+ec2-scp-get from=$tgz host=$fqdn
+
+rm -rf out
+
+tar xzf $tgz

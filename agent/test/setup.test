@@ -11,32 +11,20 @@ regress skip
 
 	> export key=tester-test
 
-	> export i=$(ec2-run-inst sg=default name=tester-1)
+	> export i=$(agent-new)
 
-	> retry-aloha limit=180 ec2-inst-state state=running
+	> trap 'agent-kill log=false wait=false' EXIT HUP INT QUIT TERM
 
-If this script errors out for any reason, still terminate the instance.
+	> agent-run sh=agent-setup
 
-	> trap 'ec2-term-inst' EXIT HUP INT QUIT TERM
+	> agent-run sh=date
 
-	> fqdn=$(ec2-inst-fqdn)
+	> agent-get
 
-	> ec2-inst-service service=sshd
-
-	> cwd=$(ec2-ssh $fqdn pwd)
-
-	> ec2-scp from=$(agent-sshkey-path) host=$fqdn to=${cwd}/.ssh/id_rsa perm=400
-
-	> ec2-scp-ssh from=$(which agent-setup) host=$fqdn to=${cwd}/agent-setup
+	> cat out/date
 
 run an orch command
 
-pull everything in a given directory back to this host
-
-	> ec2-inst-log
-
-	> ec2-term-inst
-
-	> retry-aloha limit=0 ec2-inst-state state=terminated
+	> agent-kill
 
 	> echo done

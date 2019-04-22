@@ -24,3 +24,5 @@ chmod +x bin/icat bin/pfsh bin/orch
 PATH=${cwd}/bin:$PATH
 
 orch orch-version
+
+mkdir out

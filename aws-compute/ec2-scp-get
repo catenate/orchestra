@@ -1,0 +1,26 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+debug=${debug:-false}
+debug_opt=${debug_opt-}
+if $debug; then
+	debug_opt="$debug_opt -vvv"
+fi
+
+key=${key:-tester-test}
+keypath=$(ec2-key-path key=$key)
+
+user=${user:-ec2-user}
+
+to=${to:-$from}
+
+mkdir -p $(dirname $to) || true
+
+scp $debug_opt -o 'StrictHostKeyChecking no' -i $keypath ${user}@${host}:${from} $to
+
+perm=${perm-}
+if test -n "$perm"; then
+	chmod $perm $to
+fi

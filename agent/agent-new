@@ -1,0 +1,12 @@
+set -efu
+set -o pipefail
+
+. argenv
+
+export i=$(ec2-run-inst sg=default name=agent-1)
+
+retry-aloha limit=180 ec2-inst-state state=running
+
+ec2-inst-service service=sshd
+
+echo $i

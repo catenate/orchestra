@@ -8,8 +8,8 @@ set -o pipefail
 # PATCH version for backwards-compatible bug fixes
 
 major=0
-minor=4
-patch=2
+minor=5
+patch=0
 
 version=${version:-}
 

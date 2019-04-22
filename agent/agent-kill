@@ -1,0 +1,17 @@
+set -fu
+set -o pipefail
+
+. argenv
+
+log=${log:-true}
+wait=${wait:-true}
+
+if $log; then
+	ec2-inst-log
+fi
+
+ec2-term-inst
+
+if $wait; then
+	retry-aloha limit=0 ec2-inst-state state=terminated
+fi
