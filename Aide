@@ -6,9 +6,10 @@ chmod +x pfsh
 cp -x /github/pfsh/bash-script/pfsh-version orch-version
 cp -x /n/local/home/jdc/bin/pfsh orch
 cp -x orch /n/local/home/jdc/bin 
+du -n | grep '\.test$'
 git
 git add --all .
-git commit -a -m 'orchestra 0.5.1: Also dump a list of files in the agent workspace.'
+git commit -a -m 'orchestra 0.6.0: Clone or update a repo, and add a script to run its path script.  Remote agent script to list packages installed by yum.'
 git grep ec2-scp
 git push origin master
 host ./orch which argenv
@@ -18,10 +19,15 @@ host ./path aws-cli-install
 host ./path env | grep PATH
 host orch agent-sshkey-path
 host orch env | grep PATH | host tr : '\n'
+host orch orch-version
 host orch which argenv
 host orch which log
 host which orch
 host which pfsh
 ls -l
+mkdir git
 nsh git diff
 nsh git diff --staged
+set -efux
+set -o pipefail
+. argenv

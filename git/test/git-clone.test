@@ -1,0 +1,10 @@
+host orch pastout git-clone
+tail -f log/git-clone.test.out
+
+	> set -efux
+	> set -o pipefail
+
+	> git-clone group=catenate repo=pfsh
+	> find  -name path
+
+	> echo done

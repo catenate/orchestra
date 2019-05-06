@@ -1,0 +1,35 @@
+set -efux
+set -o pipefail
+
+. argenv
+
+cwd=$(pwd)
+server=${server:-github.com}
+tag=${tag:-master}
+
+if test -d $repo; then
+	cd $repo
+	git checkout $tag
+	git fetch
+	git rebase origin/${tag}
+else
+	git clone git@${server}:${group}/${repo}.git $repo
+	cd $repo
+	git checkout $tag
+fi
+
+bin=${bin-}
+bindir=${bindir:-${cwd}/bin}
+
+repodir=${cwd}/${repo}
+path=${path:-${repodir}/path}
+subbin=${subbin-}
+
+if test -n "$bin"; then
+	if test -d ${cwd}/bin; then
+		mkdir ${HOME}/bin
+	fi
+
+	echo "$path $subbin \"\$@\"" >${bindir}/${bin}
+	chmod +x ${bindir}/${bin}
+fi

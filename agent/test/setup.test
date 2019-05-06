@@ -21,6 +21,8 @@ regress skip
 
 	> agent-run sh=find
 
+	> agent-run sh=yum-installed
+
 	> agent-get
 
 	> cat out/date
